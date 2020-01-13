@@ -1,0 +1,16 @@
+{
+  "version": 3,
+  "file": "bundle.css",
+  "sources": [
+    "../../App.svelte",
+    "../../Footer.svelte",
+    "../../Hero.svelte"
+  ],
+  "sourcesContent": [
+    "<script>\n    import Hero from './Hero.svelte';\n    import SimpleFooter from './Footer.svelte';\n    import ReactivityClickCounter from './ReactivityClickCounter.svelte';\n\n    export let name;\n</script>\n\n<Hero/>\n<main>\n    <h1>Hello {name}!</h1>\n    <p>Visit the <a href=\"https://svelte.dev/tutorial\">Svelte tutorial</a> to learn how to build Svelte apps.</p>\n    <p>Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Vestibulum id ligula porta felis euismod semper. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>\n    <ReactivityClickCounter/>\n</main>\n<SimpleFooter/>\n\n<style lang=\"less\">\n    main {\n        padding: 1em; /* TODO how to create less variable that can be used in multiple components? */\n        max-width: 240px;\n        margin: 0 auto;\n        /* p {\n            background-color: blue;\n        } */\n    }\n\n    h1 {\n        text-align: center;\n        color: #ff3e00;\n        text-transform: uppercase;\n        font-size: 4em;\n        font-weight: 100;\n    }\n\n    p {\n        color: #111;\n        font-family: Arial, sans-serif;\n    }\n\n    @media (min-width: 640px) {\n        main {\n            max-width: none;\n        }\n    }\n</style>\n",
+    "<style>\n    footer {\n        color: white;\n        background-color: lightgrey;\n        width: 100%;\n        padding: 1rem 1rem;\n    }\n</style>\n\n<footer>Footer (a Svelte Component)</footer>\n",
+    "<script>\n    let src = 'images/starstick.jpg';\n</script>\n\n<div id=\"hero\">\n    <img {src} alt=\"hero\">\n</div>\n\n<style>\n    #hero img {\n        width: 100%;\n    }\n</style>\n"
+  ],
+  "names": [],
+  "mappings": "AAkBI,IAAI,eAAC,CAAC,AACF,OAAO,CAAE,GAAG,CACZ,SAAS,CAAE,KAAK,CAChB,MAAM,CAAE,CAAC,CAAC,IAAI,AAIlB,CAAC,AAED,EAAE,eAAC,CAAC,AACA,UAAU,CAAE,MAAM,CAClB,KAAK,CAAE,OAAO,CACd,cAAc,CAAE,SAAS,CACzB,SAAS,CAAE,GAAG,CACd,WAAW,CAAE,GAAG,AACpB,CAAC,AAED,CAAC,eAAC,CAAC,AACC,KAAK,CAAE,IAAI,CACX,WAAW,CAAE,KAAK,CAAC,CAAC,UAAU,AAClC,CAAC,AAED,MAAM,AAAC,YAAY,KAAK,CAAC,AAAC,CAAC,AACvB,IAAI,eAAC,CAAC,AACF,SAAS,CAAE,IAAI,AACnB,CAAC,AACL,CAAC;AC3CD,MAAM,eAAC,CAAC,AACJ,KAAK,CAAE,KAAK,CACZ,gBAAgB,CAAE,SAAS,CAC3B,KAAK,CAAE,IAAI,CACX,OAAO,CAAE,IAAI,CAAC,IAAI,AACtB,CAAC;ACGD,mBAAK,CAAC,GAAG,cAAC,CAAC,AACP,KAAK,CAAE,IAAI,AACf,CAAC"
+}
