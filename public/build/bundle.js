@@ -332,10 +332,10 @@ var app = (function () {
     			img = element("img");
     			if (img.src !== (img_src_value = /*src*/ ctx[0])) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "hero");
-    			attr_dev(img, "class", "svelte-cy94b4");
+    			attr_dev(img, "class", "svelte-ie3lie");
     			add_location(img, file, 5, 4, 78);
     			attr_dev(div, "id", "hero");
-    			attr_dev(div, "class", "svelte-cy94b4");
+    			attr_dev(div, "class", "svelte-ie3lie");
     			add_location(div, file, 4, 0, 58);
     		},
     		l: function claim(nodes) {
@@ -634,15 +634,12 @@ var app = (function () {
     			create_component(reactivityclickcounter.$$.fragment);
     			t11 = space();
     			create_component(simplefooter.$$.fragment);
-    			attr_dev(h1, "class", "svelte-1w3gm7f");
     			add_location(h1, file$3, 10, 4, 221);
     			attr_dev(a, "href", "https://svelte.dev/tutorial");
     			add_location(a, file$3, 11, 17, 261);
-    			attr_dev(p0, "class", "svelte-1w3gm7f");
     			add_location(p0, file$3, 11, 4, 248);
-    			attr_dev(p1, "class", "svelte-1w3gm7f");
     			add_location(p1, file$3, 12, 4, 362);
-    			attr_dev(main, "class", "svelte-1w3gm7f");
+    			attr_dev(main, "class", "svelte-127mqye");
     			add_location(main, file$3, 9, 0, 210);
     		},
     		l: function claim(nodes) {

@@ -18,29 +18,9 @@
 <style lang="less">
     main {
         padding: 1em; /* TODO how to create less variable that can be used in multiple components? */
-        max-width: 240px;
+        max-width: 640px;
         margin: 0 auto;
-        /* p {
-            background-color: blue;
-        } */
     }
 
-    h1 {
-        text-align: center;
-        color: #ff3e00;
-        text-transform: uppercase;
-        font-size: 4em;
-        font-weight: 100;
-    }
 
-    p {
-        color: #111;
-        font-family: Arial, sans-serif;
-    }
-
-    @media (min-width: 640px) {
-        main {
-            max-width: none;
-        }
-    }
 </style>

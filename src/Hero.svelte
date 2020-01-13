@@ -6,8 +6,10 @@
     <img {src} alt="hero">
 </div>
 
-<style>
-    #hero img {
-        width: 100%;
+<style lang="less">
+    #hero {
+        img {
+            width: 100%;
+        }
     }
 </style>
