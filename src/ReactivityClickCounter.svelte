@@ -13,6 +13,10 @@
     }
 </script>
 
+<h2>Reactivity</h2>
+<p>
+    <code>$: {'<statement>'}</code>
+</p>
 <button on:click={handleClick}>
     clicked {count} {count===1 ? 'time' : 'times'}
 </button>

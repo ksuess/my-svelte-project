@@ -20,6 +20,10 @@ h1 {
     font-weight: 100;
 }
 
+p {
+    margin: 0 0 1em 0;
+}
+
 a {
     color: rgb(0,100,200);
     text-decoration: none;
@@ -31,6 +35,10 @@ a:hover {
 
 a:visited {
     color: rgb(0,80,160);
+}
+
+code {
+    color: #975a5a; // dark red
 }
 
 label {

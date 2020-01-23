@@ -4,6 +4,12 @@ var app = (function () {
     'use strict';
 
     function noop() { }
+    function assign(tar, src) {
+        // @ts-ignore
+        for (const k in src)
+            tar[k] = src[k];
+        return tar;
+    }
     function add_location(element, file, line, column, char) {
         element.__svelte_meta = {
             loc: { file, line, column, char }
@@ -145,6 +151,43 @@ var app = (function () {
             });
             block.o(local);
         }
+    }
+
+    function get_spread_update(levels, updates) {
+        const update = {};
+        const to_null_out = {};
+        const accounted_for = { $$scope: 1 };
+        let i = levels.length;
+        while (i--) {
+            const o = levels[i];
+            const n = updates[i];
+            if (n) {
+                for (const key in o) {
+                    if (!(key in n))
+                        to_null_out[key] = 1;
+                }
+                for (const key in n) {
+                    if (!accounted_for[key]) {
+                        update[key] = n[key];
+                        accounted_for[key] = 1;
+                    }
+                }
+                levels[i] = n;
+            }
+            else {
+                for (const key in o) {
+                    accounted_for[key] = 1;
+                }
+            }
+        }
+        for (const key in to_null_out) {
+            if (!(key in update))
+                update[key] = undefined;
+        }
+        return update;
+    }
+    function get_spread_object(spread_props) {
+        return typeof spread_props === 'object' && spread_props !== null ? spread_props : {};
     }
     function create_component(block) {
         block && block.c();
@@ -450,17 +493,16 @@ var app = (function () {
     const file$2 = "src/ReactivityClickCounter.svelte";
 
     function create_fragment$2(ctx) {
-    	let button;
-    	let t0;
+    	let h2;
     	let t1;
-    	let t2;
-    	let t3_value = (/*count*/ ctx[0] === 1 ? "time" : "times") + "";
-    	let t3;
-    	let t4;
     	let p0;
+    	let code;
+    	let t4;
+    	let button;
     	let t5;
     	let t6;
     	let t7;
+    	let t8_value = (/*count*/ ctx[0] === 1 ? "time" : "times") + "";
     	let t8;
     	let t9;
     	let p1;
@@ -468,70 +510,95 @@ var app = (function () {
     	let t11;
     	let t12;
     	let t13;
+    	let t14;
+    	let p2;
+    	let t15;
+    	let t16;
+    	let t17;
+    	let t18;
     	let dispose;
 
     	const block = {
     		c: function create() {
-    			button = element("button");
-    			t0 = text("clicked ");
-    			t1 = text(/*count*/ ctx[0]);
-    			t2 = space();
-    			t3 = text(t3_value);
-    			t4 = space();
+    			h2 = element("h2");
+    			h2.textContent = "Reactivity";
+    			t1 = space();
     			p0 = element("p");
-    			t5 = text(/*count*/ ctx[0]);
-    			t6 = text(" doubled is ");
-    			t7 = text(/*doubled*/ ctx[1]);
-    			t8 = text(".");
+    			code = element("code");
+    			code.textContent = `\$: ${"<statement>"}`;
+    			t4 = space();
+    			button = element("button");
+    			t5 = text("clicked ");
+    			t6 = text(/*count*/ ctx[0]);
+    			t7 = space();
+    			t8 = text(t8_value);
     			t9 = space();
     			p1 = element("p");
     			t10 = text(/*count*/ ctx[0]);
-    			t11 = text(" six times is ");
-    			t12 = text(/*sixth*/ ctx[2]);
+    			t11 = text(" doubled is ");
+    			t12 = text(/*doubled*/ ctx[1]);
     			t13 = text(".");
-    			add_location(button, file$2, 15, 0, 271);
-    			add_location(p0, file$2, 19, 0, 365);
-    			add_location(p1, file$2, 20, 0, 402);
+    			t14 = space();
+    			p2 = element("p");
+    			t15 = text(/*count*/ ctx[0]);
+    			t16 = text(" six times is ");
+    			t17 = text(/*sixth*/ ctx[2]);
+    			t18 = text(".");
+    			add_location(h2, file$2, 15, 0, 271);
+    			add_location(code, file$2, 17, 4, 299);
+    			add_location(p0, file$2, 16, 0, 291);
+    			add_location(button, file$2, 19, 0, 336);
+    			add_location(p1, file$2, 23, 0, 430);
+    			add_location(p2, file$2, 24, 0, 467);
     			dispose = listen_dev(button, "click", /*handleClick*/ ctx[3], false, false, false);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, button, anchor);
-    			append_dev(button, t0);
-    			append_dev(button, t1);
-    			append_dev(button, t2);
-    			append_dev(button, t3);
-    			insert_dev(target, t4, anchor);
+    			insert_dev(target, h2, anchor);
+    			insert_dev(target, t1, anchor);
     			insert_dev(target, p0, anchor);
-    			append_dev(p0, t5);
-    			append_dev(p0, t6);
-    			append_dev(p0, t7);
-    			append_dev(p0, t8);
+    			append_dev(p0, code);
+    			insert_dev(target, t4, anchor);
+    			insert_dev(target, button, anchor);
+    			append_dev(button, t5);
+    			append_dev(button, t6);
+    			append_dev(button, t7);
+    			append_dev(button, t8);
     			insert_dev(target, t9, anchor);
     			insert_dev(target, p1, anchor);
     			append_dev(p1, t10);
     			append_dev(p1, t11);
     			append_dev(p1, t12);
     			append_dev(p1, t13);
+    			insert_dev(target, t14, anchor);
+    			insert_dev(target, p2, anchor);
+    			append_dev(p2, t15);
+    			append_dev(p2, t16);
+    			append_dev(p2, t17);
+    			append_dev(p2, t18);
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*count*/ 1) set_data_dev(t1, /*count*/ ctx[0]);
-    			if (dirty & /*count*/ 1 && t3_value !== (t3_value = (/*count*/ ctx[0] === 1 ? "time" : "times") + "")) set_data_dev(t3, t3_value);
-    			if (dirty & /*count*/ 1) set_data_dev(t5, /*count*/ ctx[0]);
-    			if (dirty & /*doubled*/ 2) set_data_dev(t7, /*doubled*/ ctx[1]);
+    			if (dirty & /*count*/ 1) set_data_dev(t6, /*count*/ ctx[0]);
+    			if (dirty & /*count*/ 1 && t8_value !== (t8_value = (/*count*/ ctx[0] === 1 ? "time" : "times") + "")) set_data_dev(t8, t8_value);
     			if (dirty & /*count*/ 1) set_data_dev(t10, /*count*/ ctx[0]);
-    			if (dirty & /*sixth*/ 4) set_data_dev(t12, /*sixth*/ ctx[2]);
+    			if (dirty & /*doubled*/ 2) set_data_dev(t12, /*doubled*/ ctx[1]);
+    			if (dirty & /*count*/ 1) set_data_dev(t15, /*count*/ ctx[0]);
+    			if (dirty & /*sixth*/ 4) set_data_dev(t17, /*sixth*/ ctx[2]);
     		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(button);
-    			if (detaching) detach_dev(t4);
+    			if (detaching) detach_dev(h2);
+    			if (detaching) detach_dev(t1);
     			if (detaching) detach_dev(p0);
+    			if (detaching) detach_dev(t4);
+    			if (detaching) detach_dev(button);
     			if (detaching) detach_dev(t9);
     			if (detaching) detach_dev(p1);
+    			if (detaching) detach_dev(t14);
+    			if (detaching) detach_dev(p2);
     			dispose();
     		}
     	};
@@ -600,10 +667,173 @@ var app = (function () {
     	}
     }
 
-    /* src/App.svelte generated by Svelte v3.16.7 */
-    const file$3 = "src/App.svelte";
+    /* src/NestedSimple.svelte generated by Svelte v3.16.7 */
+
+    const file$3 = "src/NestedSimple.svelte";
+
+    // (8:4) {#if age>18}
+    function create_if_block(ctx) {
+    	let b;
+
+    	const block = {
+    		c: function create() {
+    			b = element("b");
+    			b.textContent = "Im over 18.";
+    			add_location(b, file$3, 8, 8, 162);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, b, anchor);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(b);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block.name,
+    		type: "if",
+    		source: "(8:4) {#if age>18}",
+    		ctx
+    	});
+
+    	return block;
+    }
 
     function create_fragment$3(ctx) {
+    	let div;
+    	let t0;
+    	let t1;
+    	let t2;
+    	let t3;
+    	let t4;
+    	let if_block = /*age*/ ctx[0] > 18 && create_if_block(ctx);
+
+    	const block = {
+    		c: function create() {
+    			div = element("div");
+    			t0 = text("I am a NestedSimple. I am ");
+    			t1 = text(/*age*/ ctx[0]);
+    			t2 = text(". My name is ");
+    			t3 = text(/*name*/ ctx[1]);
+    			t4 = text(".\n    ");
+    			if (if_block) if_block.c();
+    			attr_dev(div, "class", "");
+    			add_location(div, file$3, 5, 0, 66);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    			append_dev(div, t0);
+    			append_dev(div, t1);
+    			append_dev(div, t2);
+    			append_dev(div, t3);
+    			append_dev(div, t4);
+    			if (if_block) if_block.m(div, null);
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*age*/ 1) set_data_dev(t1, /*age*/ ctx[0]);
+    			if (dirty & /*name*/ 2) set_data_dev(t3, /*name*/ ctx[1]);
+
+    			if (/*age*/ ctx[0] > 18) {
+    				if (!if_block) {
+    					if_block = create_if_block(ctx);
+    					if_block.c();
+    					if_block.m(div, null);
+    				}
+    			} else if (if_block) {
+    				if_block.d(1);
+    				if_block = null;
+    			}
+    		},
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    			if (if_block) if_block.d();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$3.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$2($$self, $$props, $$invalidate) {
+    	let { age = 17 } = $$props;
+    	let { name } = $$props;
+    	const writable_props = ["age", "name"];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<NestedSimple> was created with unknown prop '${key}'`);
+    	});
+
+    	$$self.$set = $$props => {
+    		if ("age" in $$props) $$invalidate(0, age = $$props.age);
+    		if ("name" in $$props) $$invalidate(1, name = $$props.name);
+    	};
+
+    	$$self.$capture_state = () => {
+    		return { age, name };
+    	};
+
+    	$$self.$inject_state = $$props => {
+    		if ("age" in $$props) $$invalidate(0, age = $$props.age);
+    		if ("name" in $$props) $$invalidate(1, name = $$props.name);
+    	};
+
+    	return [age, name];
+    }
+
+    class NestedSimple extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance$2, create_fragment$3, safe_not_equal, { age: 0, name: 1 });
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "NestedSimple",
+    			options,
+    			id: create_fragment$3.name
+    		});
+
+    		const { ctx } = this.$$;
+    		const props = options.props || ({});
+
+    		if (/*name*/ ctx[1] === undefined && !("name" in props)) {
+    			console.warn("<NestedSimple> was created without expected prop 'name'");
+    		}
+    	}
+
+    	get age() {
+    		throw new Error("<NestedSimple>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set age(value) {
+    		throw new Error("<NestedSimple>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get name() {
+    		throw new Error("<NestedSimple>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set name(value) {
+    		throw new Error("<NestedSimple>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+    }
+
+    /* src/App.svelte generated by Svelte v3.16.7 */
+    const file$4 = "src/App.svelte";
+
+    function create_fragment$4(ctx) {
     	let t0;
     	let main;
     	let h1;
@@ -619,8 +849,23 @@ var app = (function () {
     	let p1;
     	let t10;
     	let t11;
+    	let t12;
+    	let t13;
     	let current;
     	const hero = new Hero({ $$inline: true });
+    	const nestedsimple0_spread_levels = [/*personaldata*/ ctx[1]];
+    	let nestedsimple0_props = {};
+
+    	for (let i = 0; i < nestedsimple0_spread_levels.length; i += 1) {
+    		nestedsimple0_props = assign(nestedsimple0_props, nestedsimple0_spread_levels[i]);
+    	}
+
+    	const nestedsimple0 = new NestedSimple({
+    			props: nestedsimple0_props,
+    			$$inline: true
+    		});
+
+    	const nestedsimple1 = new NestedSimple({ $$inline: true });
     	const reactivityclickcounter = new ReactivityClickCounter({ $$inline: true });
     	const simplefooter = new Footer({ $$inline: true });
 
@@ -643,17 +888,21 @@ var app = (function () {
     			p1 = element("p");
     			p1.textContent = "Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Vestibulum id ligula porta felis euismod semper. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.";
     			t10 = space();
-    			create_component(reactivityclickcounter.$$.fragment);
+    			create_component(nestedsimple0.$$.fragment);
     			t11 = space();
+    			create_component(nestedsimple1.$$.fragment);
+    			t12 = space();
+    			create_component(reactivityclickcounter.$$.fragment);
+    			t13 = space();
     			create_component(simplefooter.$$.fragment);
-    			add_location(h1, file$3, 10, 4, 221);
+    			add_location(h1, file$4, 16, 4, 347);
     			attr_dev(a, "href", "https://svelte.dev/tutorial");
     			attr_dev(a, "target", "_blank");
-    			add_location(a, file$3, 11, 17, 261);
-    			add_location(p0, file$3, 11, 4, 248);
-    			add_location(p1, file$3, 12, 4, 378);
+    			add_location(a, file$4, 17, 17, 387);
+    			add_location(p0, file$4, 17, 4, 374);
+    			add_location(p1, file$4, 18, 4, 504);
     			attr_dev(main, "class", "svelte-127mqye");
-    			add_location(main, file$3, 9, 0, 210);
+    			add_location(main, file$4, 15, 0, 336);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -674,23 +923,37 @@ var app = (function () {
     			append_dev(main, t8);
     			append_dev(main, p1);
     			append_dev(main, t10);
+    			mount_component(nestedsimple0, main, null);
+    			append_dev(main, t11);
+    			mount_component(nestedsimple1, main, null);
+    			append_dev(main, t12);
     			mount_component(reactivityclickcounter, main, null);
-    			insert_dev(target, t11, anchor);
+    			insert_dev(target, t13, anchor);
     			mount_component(simplefooter, target, anchor);
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
     			if (!current || dirty & /*name*/ 1) set_data_dev(t2, /*name*/ ctx[0]);
+
+    			const nestedsimple0_changes = (dirty & /*personaldata*/ 2)
+    			? get_spread_update(nestedsimple0_spread_levels, [get_spread_object(/*personaldata*/ ctx[1])])
+    			: {};
+
+    			nestedsimple0.$set(nestedsimple0_changes);
     		},
     		i: function intro(local) {
     			if (current) return;
     			transition_in(hero.$$.fragment, local);
+    			transition_in(nestedsimple0.$$.fragment, local);
+    			transition_in(nestedsimple1.$$.fragment, local);
     			transition_in(reactivityclickcounter.$$.fragment, local);
     			transition_in(simplefooter.$$.fragment, local);
     			current = true;
     		},
     		o: function outro(local) {
     			transition_out(hero.$$.fragment, local);
+    			transition_out(nestedsimple0.$$.fragment, local);
+    			transition_out(nestedsimple1.$$.fragment, local);
     			transition_out(reactivityclickcounter.$$.fragment, local);
     			transition_out(simplefooter.$$.fragment, local);
     			current = false;
@@ -699,15 +962,17 @@ var app = (function () {
     			destroy_component(hero, detaching);
     			if (detaching) detach_dev(t0);
     			if (detaching) detach_dev(main);
+    			destroy_component(nestedsimple0);
+    			destroy_component(nestedsimple1);
     			destroy_component(reactivityclickcounter);
-    			if (detaching) detach_dev(t11);
+    			if (detaching) detach_dev(t13);
     			destroy_component(simplefooter, detaching);
     		}
     	};
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_fragment$3.name,
+    		id: create_fragment$4.name,
     		type: "component",
     		source: "",
     		ctx
@@ -716,8 +981,9 @@ var app = (function () {
     	return block;
     }
 
-    function instance$2($$self, $$props, $$invalidate) {
+    function instance$3($$self, $$props, $$invalidate) {
     	let { name } = $$props;
+    	const personaldata = { age: 23, name: "Pia" };
     	const writable_props = ["name"];
 
     	Object.keys($$props).forEach(key => {
@@ -736,19 +1002,19 @@ var app = (function () {
     		if ("name" in $$props) $$invalidate(0, name = $$props.name);
     	};
 
-    	return [name];
+    	return [name, personaldata];
     }
 
     class App extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$2, create_fragment$3, safe_not_equal, { name: 0 });
+    		init(this, options, instance$3, create_fragment$4, safe_not_equal, { name: 0 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
     			tagName: "App",
     			options,
-    			id: create_fragment$3.name
+    			id: create_fragment$4.name
     		});
 
     		const { ctx } = this.$$;
@@ -771,7 +1037,7 @@ var app = (function () {
     const app = new App({
       target: document.body,
       props: {
-        name: "Zürich"
+        name: "world"
       }
     });
 
