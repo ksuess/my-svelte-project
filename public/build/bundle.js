@@ -648,9 +648,10 @@ var app = (function () {
     			create_component(simplefooter.$$.fragment);
     			add_location(h1, file$3, 10, 4, 221);
     			attr_dev(a, "href", "https://svelte.dev/tutorial");
+    			attr_dev(a, "target", "_blank");
     			add_location(a, file$3, 11, 17, 261);
     			add_location(p0, file$3, 11, 4, 248);
-    			add_location(p1, file$3, 12, 4, 362);
+    			add_location(p1, file$3, 12, 4, 378);
     			attr_dev(main, "class", "svelte-127mqye");
     			add_location(main, file$3, 9, 0, 210);
     		},
