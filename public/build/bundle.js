@@ -462,10 +462,12 @@ var app = (function () {
     	let t6;
     	let t7;
     	let t8;
-    	let p1;
     	let t9;
+    	let p1;
     	let t10;
     	let t11;
+    	let t12;
+    	let t13;
     	let dispose;
 
     	const block = {
@@ -480,14 +482,16 @@ var app = (function () {
     			t5 = text(/*count*/ ctx[0]);
     			t6 = text(" doubled is ");
     			t7 = text(/*doubled*/ ctx[1]);
-    			t8 = space();
+    			t8 = text(".");
+    			t9 = space();
     			p1 = element("p");
-    			t9 = text(/*count*/ ctx[0]);
-    			t10 = text(" sixth is ");
-    			t11 = text(/*sixth*/ ctx[2]);
-    			add_location(button, file$2, 10, 0, 151);
-    			add_location(p0, file$2, 14, 0, 245);
-    			add_location(p1, file$2, 15, 0, 281);
+    			t10 = text(/*count*/ ctx[0]);
+    			t11 = text(" six times is ");
+    			t12 = text(/*sixth*/ ctx[2]);
+    			t13 = text(".");
+    			add_location(button, file$2, 15, 0, 271);
+    			add_location(p0, file$2, 19, 0, 365);
+    			add_location(p1, file$2, 20, 0, 402);
     			dispose = listen_dev(button, "click", /*handleClick*/ ctx[3], false, false, false);
     		},
     		l: function claim(nodes) {
@@ -504,19 +508,21 @@ var app = (function () {
     			append_dev(p0, t5);
     			append_dev(p0, t6);
     			append_dev(p0, t7);
-    			insert_dev(target, t8, anchor);
+    			append_dev(p0, t8);
+    			insert_dev(target, t9, anchor);
     			insert_dev(target, p1, anchor);
-    			append_dev(p1, t9);
     			append_dev(p1, t10);
     			append_dev(p1, t11);
+    			append_dev(p1, t12);
+    			append_dev(p1, t13);
     		},
     		p: function update(ctx, [dirty]) {
     			if (dirty & /*count*/ 1) set_data_dev(t1, /*count*/ ctx[0]);
     			if (dirty & /*count*/ 1 && t3_value !== (t3_value = (/*count*/ ctx[0] === 1 ? "time" : "times") + "")) set_data_dev(t3, t3_value);
     			if (dirty & /*count*/ 1) set_data_dev(t5, /*count*/ ctx[0]);
     			if (dirty & /*doubled*/ 2) set_data_dev(t7, /*doubled*/ ctx[1]);
-    			if (dirty & /*count*/ 1) set_data_dev(t9, /*count*/ ctx[0]);
-    			if (dirty & /*sixth*/ 4) set_data_dev(t11, /*sixth*/ ctx[2]);
+    			if (dirty & /*count*/ 1) set_data_dev(t10, /*count*/ ctx[0]);
+    			if (dirty & /*sixth*/ 4) set_data_dev(t12, /*sixth*/ ctx[2]);
     		},
     		i: noop,
     		o: noop,
@@ -524,7 +530,7 @@ var app = (function () {
     			if (detaching) detach_dev(button);
     			if (detaching) detach_dev(t4);
     			if (detaching) detach_dev(p0);
-    			if (detaching) detach_dev(t8);
+    			if (detaching) detach_dev(t9);
     			if (detaching) detach_dev(p1);
     			dispose();
     		}
@@ -568,6 +574,12 @@ var app = (function () {
 
     		if ($$self.$$.dirty & /*doubled*/ 2) {
     			 $$invalidate(2, sixth = 3 * doubled);
+    		}
+
+    		if ($$self.$$.dirty & /*count*/ 1) {
+    			 if (count >= 3) {
+    				console.log("count >= 3");
+    			}
     		}
     	};
 
