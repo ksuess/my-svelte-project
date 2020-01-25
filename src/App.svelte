@@ -3,7 +3,8 @@
     import SimpleFooter from './Footer.svelte';
     import ReactivityClickCounter from './ReactivityClickCounter.svelte';
     import NestedSimple from './NestedSimple.svelte';
-
+    import AsynchronousRandomNumber from './AsynchronousRandomNumber.svelte';
+    import EventMouseOver from './EventMouseOver.svelte'
     export let name;
 
     const personaldata = {
@@ -17,6 +18,9 @@
     <h1>Hello {name}!</h1>
     <p>Visit the <a href="https://svelte.dev/tutorial" target="_blank">Svelte tutorial</a> to learn how to build Svelte apps.</p>
     <p>Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Vestibulum id ligula porta felis euismod semper. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+
+    <EventMouseOver/>
+    <AsynchronousRandomNumber/>
 
     <NestedSimple {...personaldata}/>
     <NestedSimple/>
